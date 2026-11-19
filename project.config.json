@@ -1,8 +1,8 @@
 {
   "compileType": "miniprogram",
   "libVersion": "3.4.10",
-  "appid": "wx469609ed72f4be26",
-  "projectname": "wordimges-miniapp",
+  "appid": "你的小程序appid",
+  "projectname": "lskyxcx-miniapp",
   "setting": {
     "urlCheck": false,
     "es6": true,
