@@ -1,0 +1,85 @@
+.login-page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+.login-bg {
+  position: relative;
+  padding: 120rpx 0 140rpx;
+  background: linear-gradient(135deg, #4D6BFE 0%, #7C5CFC 55%, #8B5CF6 100%);
+  overflow: hidden;
+}
+.blob {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.12);
+}
+.blob-1 {
+  width: 420rpx;
+  height: 420rpx;
+  top: -160rpx;
+  right: -120rpx;
+}
+.blob-2 {
+  width: 280rpx;
+  height: 280rpx;
+  bottom: -100rpx;
+  left: -80rpx;
+}
+.login-hero {
+  position: relative;
+  text-align: center;
+}
+.logo-mark {
+  width: 150rpx;
+  height: 150rpx;
+  line-height: 150rpx;
+  margin: 0 auto 28rpx;
+  font-size: 72rpx;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 44rpx;
+  box-shadow: 0 16rpx 40rpx rgba(25, 28, 43, 0.2);
+}
+.logo-title {
+  font-size: 46rpx;
+  font-weight: 800;
+  color: #ffffff;
+  letter-spacing: 2rpx;
+}
+.logo-sub {
+  font-size: 25rpx;
+  color: rgba(255, 255, 255, 0.75);
+  margin-top: 12rpx;
+}
+
+.login-card {
+  margin: -80rpx 32rpx 0;
+  position: relative;
+  padding: 48rpx 40rpx;
+  box-shadow: 0 20rpx 50rpx rgba(25, 28, 43, 0.1);
+}
+.ph {
+  color: #9AA1B2;
+}
+.login-btn {
+  margin-top: 16rpx;
+}
+.register-link {
+  text-align: center;
+  font-size: 26rpx;
+  color: #5C6374;
+  margin-top: 40rpx;
+}
+.link-text {
+  color: #4D6BFE;
+  font-weight: 600;
+}
+.tips {
+  text-align: center;
+  color: #9AA1B2;
+  font-size: 22rpx;
+  margin-top: auto;
+  padding: 60rpx 0 50rpx;
+}
+
+.logo-mark { box-sizing: border-box; padding: 40rpx; }

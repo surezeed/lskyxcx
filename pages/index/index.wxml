@@ -1,0 +1,264 @@
+<view class="page-theme {{theme}}">
+<!-- 首页 · 杂志编辑风 v3.0 -->
+<view class="mag">
+  <view class="bg-mesh"></view>
+
+  <!-- 搜索展开态：全屏透明遮罩，点击空白处收起 -->
+  <view wx:if="{{searchExpanded}}" class="search-mask" catchtap="closeSearch"></view>
+
+  <!-- ======== 未登录 ======== -->
+  <block wx:if="{{!logged}}">
+    <view class="masthead">
+      <view class="mast-meta">
+        <text class="mast-meta-l">WORDIMAGES STUDIO</text>
+        <text class="mast-meta-r">ISSUE 01</text>
+      </view>
+    </view>
+
+    <view class="deck-zone">
+      <view class="deck">
+        <view class="deck-card deck-left deck-deco-a"></view>
+        <view class="deck-card deck-right deck-deco-b"></view>
+        <view class="deck-card deck-main deck-deco-main">
+          <image class="deck-mark" src="/images/li/photo-white.png" />
+          <view class="deck-empty-cap">YOUR IMAGE HOST</view>
+        </view>
+      </view>
+      <!-- 标题行：左侧超大标题+金色副标，右侧竖长搜索胶囊（参照杂志 App 排版） -->
+      <view class="title-row">
+        <view class="title-block">
+          <view class="display-title">WordImages</view>
+          <view class="display-sub">CAPTURE · UPLOAD · SHARE</view>
+        </view>
+        <view class="capsule {{searchExpanded ? 'capsule-hide' : ''}}" hover-class="img-press" bindtap="openSearch">
+          <image class="capsule-icon" src="/images/li/search-gray.png" />
+        </view>
+        <!-- 原位展开的横向玻璃搜索条（锚定牌堆下方标题行，居中横向展开） -->
+        <view wx:if="{{searchExpanded}}" class="search-open">
+          <input class="search-open-input" focus placeholder="搜索一下!" placeholder-class="search-ph"
+                 value="{{keyword}}" bindinput="onKeyword" bindconfirm="doSearch" confirm-type="search" />
+          <view class="search-open-btn" hover-class="img-press" bindtap="doSearch">
+            <image class="search-open-btn-icon" src="/images/li/search-white.png" />
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <view class="cta-zone">
+      <button class="btn-primary cta-btn" bindtap="goLogin">立即登录</button>
+      <view class="cta-note">登录后即可上传图片、管理相册、复制外链</view>
+    </view>
+
+    <view class="feature-grid">
+      <view class="feat feat-dark" hover-class="img-press" bindtap="goLogin">
+        <view class="feat-orb"></view>
+        <view class="feat-gold">UPLOAD</view>
+        <view class="feat-title">上传图片</view>
+        <view class="feat-sub">登录后开启极速上传</view>
+        <image class="feat-emoji" src="/images/li/rocket-white.png" />
+      </view>
+      <view class="feat-col">
+        <view class="feat feat-mint" hover-class="img-press" bindtap="goLogin">
+          <view class="feat-ic feat-ic-blue"><image class="feat-ic-img" src="/images/li/folder-white.png" /></view>
+          <view class="feat-title feat-title-dark">相册</view>
+          <view class="feat-sub-dark">Albums</view>
+        </view>
+        <view class="feat feat-peach" hover-class="img-press" bindtap="goLogin">
+          <view class="feat-ic feat-ic-violet"><image class="feat-ic-img" src="/images/li/share-white.png" /></view>
+          <view class="feat-title feat-title-dark">分享</view>
+          <view class="feat-sub-dark">Shares</view>
+        </view>
+      </view>
+    </view>
+
+    <view class="marquee">
+      <view class="marquee-track">
+        <view class="marquee-group">
+          <text class="mq-txt">"EVERY PICTURE TELLS A STORY — UPLOAD YOURS."</text>
+          <text class="mq-dot">✦</text>
+          <text class="mq-txt">"LIGHT MAKES PHOTOGRAPHY. EMBRACE IT."</text>
+          <text class="mq-dot">✦</text>
+          <text class="mq-txt">"好图值得被看见 · WORDIMAGES"</text>
+          <text class="mq-dot">✦</text>
+        </view>
+        <view class="marquee-group" aria-hidden="true">
+          <text class="mq-txt">"EVERY PICTURE TELLS A STORY — UPLOAD YOURS."</text>
+          <text class="mq-dot">✦</text>
+          <text class="mq-txt">"LIGHT MAKES PHOTOGRAPHY. EMBRACE IT."</text>
+          <text class="mq-dot">✦</text>
+          <text class="mq-txt">"好图值得被看见 · WORDIMAGES"</text>
+          <text class="mq-dot">✦</text>
+        </view>
+      </view>
+    </view>
+    <view class="bottom-space"></view>
+  </block>
+
+  <!-- ======== 已登录 ======== -->
+  <block wx:else>
+    <view class="masthead">
+      <view class="mast-row">
+        <image class="mast-avatar" src="{{profile.avatar_url}}" mode="aspectFill" wx:if="{{profile.avatar_url}}" />
+        <view class="mast-avatar mast-avatar-ph" wx:else>{{profile.name ? profile.name[0] : 'U'}}</view>
+        <view class="mast-id">
+          <text class="mast-name-sm">{{profile.name}}</text>
+          <text class="mast-group">{{groupName}}</text>
+        </view>
+        <view class="mast-badge">PRO</view>
+      </view>
+    </view>
+
+    <view class="deck-zone">
+      <view class="deck" bindtouchstart="onDeckTouchStart" bindtouchend="onDeckTouchEnd">
+        <!-- deck3: [0]=上一张(左) [1]=当前(主) [2]=下一张(右)，wx:key 复用节点使 transform 平滑过渡 -->
+        <view wx:for="{{deck3}}" wx:key="key"
+              class="deck-card {{item.cls}} {{item.type === 'deco' ? item.decoClass : ''}}"
+              hover-class="{{index === 1 ? 'img-press' : ''}}"
+              data-id="{{item.id}}"
+              bindtap="{{item.type === 'photo' ? 'openPhoto' : 'goUpload'}}">
+          <image wx:if="{{item.type === 'photo'}}" class="deck-img" src="{{item.thumb}}" mode="aspectFill" lazy-load="{{index !== 1}}" />
+          <block wx:if="{{item.type === 'deco' && index === 1}}">
+            <image class="deck-mark" src="/images/li/photo-white.png" />
+            <view class="deck-empty-cap">NO PHOTOS YET</view>
+          </block>
+        </view>
+      </view>
+      <view class="deck-pager" wx:if="{{deckTotal > 1}}">
+        <text class="deck-pager-cur">{{deckIndex + 1}}</text>
+        <text class="deck-pager-sep"> / </text>
+        <text class="deck-pager-total">{{deckTotal}}</text>
+      </view>
+      <!-- 标题行：左侧超大标题+金色副标，右侧竖长搜索胶囊（参照杂志 App 排版） -->
+      <view class="title-row">
+        <view class="title-block">
+          <view class="display-title display-title-user">{{profile.name}}</view>
+          <view class="display-sub">WORDIMAGES · IMAGE HOSTING</view>
+        </view>
+        <view class="capsule {{searchExpanded ? 'capsule-hide' : ''}}" hover-class="img-press" bindtap="openSearch">
+          <image class="capsule-icon" src="/images/li/search-gray.png" />
+        </view>
+        <!-- 原位展开的横向玻璃搜索条（锚定牌堆下方标题行，居中横向展开） -->
+        <view wx:if="{{searchExpanded}}" class="search-open">
+          <input class="search-open-input" focus placeholder="搜索一下!" placeholder-class="search-ph"
+                 value="{{keyword}}" bindinput="onKeyword" bindconfirm="doSearch" confirm-type="search" />
+          <view class="search-open-btn" hover-class="img-press" bindtap="doSearch">
+            <image class="search-open-btn-icon" src="/images/li/search-white.png" />
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <view class="feature-grid">
+      <view class="feat feat-dark" hover-class="img-press" bindtap="goUpload">
+        <view class="feat-orb"></view>
+        <view class="feat-gold">UPLOAD</view>
+        <view class="feat-title">上传图片</view>
+        <view class="feat-sub">极速上传 · 一键外链</view>
+        <image class="feat-emoji" src="/images/li/rocket-white.png" />
+      </view>
+      <view class="feat-col">
+        <view class="feat feat-mint" hover-class="img-press" bindtap="goAlbums">
+          <view class="feat-ic feat-ic-blue"><image class="feat-ic-img" src="/images/li/folder-white.png" /></view>
+          <view class="feat-title feat-title-dark">相册</view>
+          <view class="feat-sub-dark">{{profile.album_count}} Albums</view>
+        </view>
+        <view class="feat feat-peach" hover-class="img-press" bindtap="goShares">
+          <view class="feat-ic feat-ic-violet"><image class="feat-ic-img" src="/images/li/share-white.png" /></view>
+          <view class="feat-title feat-title-dark">分享</view>
+          <view class="feat-sub-dark">{{profile.share_count}} Shares</view>
+        </view>
+      </view>
+    </view>
+
+    <view class="marquee">
+      <view class="marquee-track">
+        <view class="marquee-group">
+          <text class="mq-txt">"EVERY PICTURE TELLS A STORY — UPLOAD YOURS."</text>
+          <text class="mq-dot">✦</text>
+          <text class="mq-txt">"LIGHT MAKES PHOTOGRAPHY. EMBRACE IT."</text>
+          <text class="mq-dot">✦</text>
+          <text class="mq-txt">"好图值得被看见 · WORDIMAGES"</text>
+          <text class="mq-dot">✦</text>
+        </view>
+        <view class="marquee-group" aria-hidden="true">
+          <text class="mq-txt">"EVERY PICTURE TELLS A STORY — UPLOAD YOURS."</text>
+          <text class="mq-dot">✦</text>
+          <text class="mq-txt">"LIGHT MAKES PHOTOGRAPHY. EMBRACE IT."</text>
+          <text class="mq-dot">✦</text>
+          <text class="mq-txt">"好图值得被看见 · WORDIMAGES"</text>
+          <text class="mq-dot">✦</text>
+        </view>
+      </view>
+    </view>
+
+    <view class="notice-line">
+      <view class="n-dot"></view>
+      <text class="n-txt">{{usageText}} · {{usagePercent}}% 已使用</text>
+      <view class="n-chip" bindtap="goPlans">扩容 ›</view>
+    </view>
+
+    <view class="folio">
+      <view class="folio-item" bindtap="goGallery">
+        <text class="folio-num">{{profile.photo_count}}</text>
+        <text class="folio-label">PHOTOS</text>
+      </view>
+      <view class="folio-rule"></view>
+      <view class="folio-item" bindtap="goAlbums">
+        <text class="folio-num">{{profile.album_count}}</text>
+        <text class="folio-label">ALBUMS</text>
+      </view>
+      <view class="folio-rule"></view>
+      <view class="folio-item" bindtap="goShares">
+        <text class="folio-num">{{profile.share_count}}</text>
+        <text class="folio-label">SHARES</text>
+      </view>
+      <view class="folio-rule"></view>
+      <view class="folio-item" bindtap="goPlans">
+        <text class="folio-num folio-num-gold">{{usagePercent}}%</text>
+        <text class="folio-label">USED</text>
+      </view>
+    </view>
+
+    <view class="toc">
+      <view class="toc-head">
+        <text class="toc-title">目录</text>
+        <text class="toc-head-en">CONTENTS</text>
+      </view>
+      <view class="toc-item" hover-class="toc-hover" bindtap="goGallery">
+        <text class="toc-no">01</text>
+        <text class="toc-name">图库</text>
+        <text class="toc-en">Gallery</text>
+        <text class="toc-arrow">›</text>
+      </view>
+      <view class="toc-item" hover-class="toc-hover" bindtap="goPlans">
+        <text class="toc-no">02</text>
+        <text class="toc-name">套餐</text>
+        <text class="toc-en">Plans</text>
+        <view class="toc-tag">升级</view>
+        <text class="toc-arrow">›</text>
+      </view>
+      <view class="toc-item" hover-class="toc-hover" bindtap="goTokens">
+        <text class="toc-no">03</text>
+        <text class="toc-name">令牌</text>
+        <text class="toc-en">Tokens</text>
+        <text class="toc-arrow">›</text>
+      </view>
+    </view>
+
+    <view class="section-head">
+      <text class="section-title">最近上传</text>
+      <text class="section-more" bindtap="goGallery">查看全部 ›</text>
+    </view>
+    <scroll-view wx:if="{{recent.length}}" class="strip" scroll-x enhanced show-scrollbar="{{false}}">
+      <view class="strip-item" wx:for="{{recent}}" wx:key="id"
+            data-id="{{item.id}}" bindtap="openPhoto" hover-class="img-press">
+        <image class="strip-img" src="{{item.thumb}}" mode="aspectFill" lazy-load />
+        <view class="strip-name">{{item.name}}</view>
+      </view>
+    </scroll-view>
+    <view wx:else class="empty">还没有上传过图片，从「上传图片」开始</view>
+
+    <view class="bottom-space"></view>
+  </block>
+</view>
+</view>

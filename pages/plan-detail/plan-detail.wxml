@@ -1,0 +1,31 @@
+<view class="page-theme {{theme}}">
+<view wx:if="{{loading}}" class="loading-tip" style="margin-top:200rpx">加载中...</view>
+
+<block wx:if="{{plan}}">
+  <!-- 套餐头部:VIP 金色 / 容量 蓝紫 -->
+  <view class="plan-hero {{plan.type === 'vip' ? 'hero-vip' : 'hero-storage'}}">
+    <view class="blob blob-1"></view>
+    <view class="blob blob-2"></view>
+    <view class="hero-label">
+      <image class="hero-label-ic" src="{{plan.type === 'vip' ? '/images/li/crown-white.png' : '/images/li/database-white.png'}}" />
+      {{plan.type === 'vip' ? 'VIP套餐' : '容量套餐'}}
+    </view>
+    <view wx:if="{{plan.badge}}" class="hero-badge">{{plan.badge}}</view>
+    <view class="hero-name">{{plan.name}}</view>
+    <view class="hero-intro" wx:if="{{plan.intro}}">{{plan.intro}}</view>
+  </view>
+
+  <!-- 权益列表 -->
+  <view class="card" wx:if="{{plan.features.length}}">
+    <view class="block-title">套餐权益</view>
+    <view class="feature-row" wx:for="{{plan.features}}" wx:key="*this">
+      <view class="check {{plan.type === 'vip' ? 'check-gold' : ''}}"><image class="check-ic" src="{{plan.type === 'vip' ? '/images/li/check-orange.png' : '/images/li/check-green.png'}}" /></view>
+      <text class="feature-text">{{item}}</text>
+    </view>
+  </view>
+
+  <!-- 价格展示已移除,购买请前往网页端 -->
+
+  <view class="web-tip">套餐购买请移步网页端,小程序只提供图片上传和管理服务</view>
+</block>
+</view>

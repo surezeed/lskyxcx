@@ -1,0 +1,185 @@
+.top-bar {
+  display: flex;
+  align-items: center;
+  padding: 32rpx 32rpx 8rpx;
+}
+.top-title {
+  flex: 1;
+}
+.top-name {
+  font-size: 34rpx;
+  font-weight: 700;
+}
+.top-desc {
+  display: block;
+  font-size: 23rpx;
+  color: #9AA1B2;
+  margin-top: 6rpx;
+}
+.add-btn {
+  background: linear-gradient(135deg, #4D6BFE, #7C5CFC);
+  color: #ffffff;
+  font-size: 25rpx;
+  font-weight: 600;
+  border-radius: 28rpx;
+  padding: 12rpx 32rpx;
+  box-shadow: 0 8rpx 20rpx rgba(77, 107, 254, 0.3);
+}
+.ph {
+  color: #9AA1B2;
+}
+
+.token-created {
+  border: 2rpx solid #86efac;
+  background: #E7F8F2;
+}
+.created-title {
+  font-size: 26rpx;
+  font-weight: 600;
+  color: #10B981;
+  margin-bottom: 16rpx;
+}
+.created-token {
+  background: #ffffff;
+  border-radius: 14rpx;
+  padding: 20rpx 24rpx;
+  font-size: 22rpx;
+  color: #5C6374;
+  word-break: break-all;
+  line-height: 1.6;
+}
+.copy-btn {
+  margin-top: 24rpx;
+}
+
+.token-item {
+  padding: 30rpx 32rpx;
+}
+.token-head {
+  display: flex;
+  align-items: center;
+}
+.token-info {
+  flex: 1;
+  margin-left: 24rpx;
+}
+.token-name {
+  font-size: 30rpx;
+  font-weight: 600;
+}
+.token-meta {
+  font-size: 23rpx;
+  color: #9AA1B2;
+  margin-top: 8rpx;
+}
+.token-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 24rpx;
+  padding-top: 24rpx;
+  border-top: 2rpx solid #EEF0F6;
+}
+.action {
+  font-size: 23rpx;
+  color: #4D6BFE;
+  background: rgba(77, 107, 254, 0.1);
+  border-radius: 28rpx;
+  padding: 10rpx 28rpx;
+  margin-left: 16rpx;
+  font-weight: 500;
+}
+.action-danger {
+  color: #F43F5E;
+  background: #FEECEF;
+}
+
+/* 权限勾选 */
+.label-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.perm-all {
+  font-size: 24rpx;
+  color: #4D6BFE;
+  font-weight: 600;
+}
+.perm-tip {
+  font-size: 22rpx;
+  color: #9AA1B2;
+  margin: 8rpx 0 20rpx;
+}
+.perm-loading {
+  font-size: 24rpx;
+  color: #9AA1B2;
+  padding: 24rpx 0;
+}
+.perm-group {
+  margin-bottom: 24rpx;
+}
+.perm-group-title {
+  font-size: 24rpx;
+  font-weight: 700;
+  color: #5C6374;
+  margin-bottom: 12rpx;
+}
+.perm-row {
+  display: flex;
+  align-items: center;
+  background: #F2F4F9;
+  border-radius: 16rpx;
+  padding: 20rpx 22rpx;
+  margin-bottom: 12rpx;
+  border: 2rpx solid transparent;
+}
+.perm-on {
+  background: rgba(77, 107, 254, 0.1);
+  border-color: #4D6BFE;
+}
+.perm-texts {
+  flex: 1;
+  min-width: 0;
+}
+.perm-label {
+  display: block;
+  font-size: 26rpx;
+  font-weight: 600;
+  color: #191C2B;
+}
+.perm-detail {
+  display: block;
+  font-size: 21rpx;
+  color: #9AA1B2;
+  margin-top: 4rpx;
+  line-height: 1.5;
+}
+.perm-check {
+  width: 40rpx;
+  height: 40rpx;
+  border-radius: 50%;
+  border: 2rpx solid #C6CBDD;
+  color: #ffffff;
+  font-size: 24rpx;
+  text-align: center;
+  line-height: 36rpx;
+  margin-left: 16rpx;
+  flex-shrink: 0;
+}
+.perm-on .perm-check {
+  background: #4D6BFE;
+  border-color: #4D6BFE;
+}
+.token-abilities {
+  font-size: 22rpx;
+  color: #4D6BFE;
+  background: rgba(77, 107, 254, 0.1);
+  border-radius: 10rpx;
+  padding: 8rpx 14rpx;
+  margin-top: 10rpx;
+  line-height: 1.5;
+}
+
+.perm-check { display: flex; align-items: center; justify-content: center; }
+.perm-check-ic { width: 22rpx; height: 22rpx; }
+.title-ic { width: 30rpx; height: 30rpx; margin-right: 8rpx; }
+.created-title { display: flex; align-items: center; justify-content: center; }

@@ -1,0 +1,34 @@
+<view class="page-theme {{theme}}">
+<view class="login-page">
+  <view class="login-bg">
+    <view class="blob blob-1"></view>
+    <view class="blob blob-2"></view>
+    <view class="login-hero">
+      <image class="logo-mark" src="/images/li/photo-white.png" />
+      <view class="logo-title">WordImages</view>
+      <view class="logo-sub">轻盈好用的云端图床</view>
+    </view>
+  </view>
+
+  <view class="login-card card">
+    <view class="form-item">
+      <text class="form-label">用户名</text>
+      <input class="form-input" placeholder="请输入用户名" placeholder-class="ph"
+             value="{{username}}" data-field="username" bindinput="onInput" />
+    </view>
+    <view class="form-item">
+      <text class="form-label">密码</text>
+      <input class="form-input" password placeholder="请输入密码" placeholder-class="ph"
+             value="{{password}}" data-field="password" bindinput="onInput" />
+    </view>
+    <button class="btn-primary login-btn" bindtap="submit" loading="{{loading}}" disabled="{{loading}}">
+      登 录
+    </button>
+    <view class="register-link" bindtap="goRegister">
+      还没有账号?<text class="link-text">立即注册</text>
+    </view>
+  </view>
+
+  <view class="tips">wordimges.com · 安全托管你的每一张图</view>
+</view>
+</view>

@@ -1,0 +1,50 @@
+<view class="page-theme {{theme}}">
+<!-- 未登录 -->
+<view wx:if="{{!logged}}" class="empty">
+  <image class="empty-icon" src="/images/li/lock-gray.png" />
+  <view>登录后可查看你的图库</view>
+  <button class="btn-primary empty-btn" bindtap="goLogin">去登录</button>
+</view>
+
+<block wx:else>
+  <!-- 搜索与筛选 -->
+  <view class="toolbar">
+    <view class="search-box">
+      <image class="search-icon" src="/images/li/search-gray.png" />
+      <input class="search-input" placeholder="搜索图片名称 / 文件名" placeholder-class="ph"
+             value="{{q}}" bindinput="onSearch" bindconfirm="doSearch" confirm-type="search" />
+      <view class="search-btn" bindtap="doSearch">搜索</view>
+    </view>
+    <view class="filter-row">
+      <view class="chip {{order === 'latest' ? 'chip-active' : ''}}" data-order="latest" bindtap="switchOrder">
+        {{order === 'latest' ? '↓ 最新优先' : '↑ 最早优先'}}
+      </view>
+      <view wx:if="{{albumId}}" class="chip chip-active" bindtap="clearFilter">
+        <image class="chip-ic" src="/images/li/folder-blue.png" /> {{albumName}} ✕
+      </view>
+      <view class="count">共 {{total}} 张</view>
+    </view>
+  </view>
+
+  <!-- 图片网格 -->
+  <view wx:if="{{photos.length}}" class="grid">
+    <view class="cell" wx:for="{{photos}}" wx:key="id"
+          data-id="{{item.id}}" bindtap="openPhoto" bindlongpress="onLongPress">
+      <view class="img-wrap">
+        <image class="img" src="{{item.thumb}}" mode="aspectFill" lazy-load />
+        <view wx:if="{{item.isPublic}}" class="public-badge">公开</view>
+      </view>
+      <view class="cell-name">{{item.name}}</view>
+    </view>
+  </view>
+
+  <view wx:elif="{{!loading}}" class="empty">
+    <image class="empty-icon" src="/images/li/photo-gray.png" />
+    <view>{{q || albumId ? '没有找到匹配的图片' : '图库还是空的,去上传一张吧'}}</view>
+    <navigator class="btn-primary empty-btn" url="/pages/upload/upload">去上传</navigator>
+  </view>
+
+  <view wx:if="{{loading}}" class="loading-tip">加载中...</view>
+  <view wx:elif="{{!hasMore && photos.length}}" class="loading-tip">— 没有更多了 —</view>
+</block>
+</view>

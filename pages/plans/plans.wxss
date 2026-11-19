@@ -1,0 +1,111 @@
+.filter-bar {
+  display: flex;
+  padding: 28rpx 32rpx 8rpx;
+}
+.chip {
+  font-size: 24rpx;
+  color: #5C6374;
+  background: #ffffff;
+  border-radius: 30rpx;
+  padding: 12rpx 32rpx;
+  margin-right: 18rpx;
+  box-shadow: 0 4rpx 16rpx rgba(25, 28, 43, 0.05);
+}
+.chip-active {
+  color: #ffffff;
+  background: linear-gradient(135deg, #4D6BFE, #7C5CFC);
+  font-weight: 600;
+  box-shadow: 0 8rpx 20rpx rgba(77, 107, 254, 0.3);
+}
+
+.plan-list {
+  padding-bottom: 30rpx;
+}
+.plan-item {
+  position: relative;
+  overflow: hidden;
+}
+/* VIP:金色系 */
+.type-vip {
+  background: linear-gradient(160deg, #fffaf0 0%, #ffffff 70%);
+  border-left: 8rpx solid #f59e0b;
+}
+.type-vip .plan-icon {
+  background: linear-gradient(135deg, #FEF4E2, #fde8c8);
+}
+.icon-vip {
+  color: #f59e0b;
+}
+.type-label-vip {
+  color: #d97706;
+  font-weight: 700;
+}
+/* 容量:蓝色系 */
+.type-storage {
+  background: linear-gradient(160deg, #f5f8ff 0%, #ffffff 70%);
+  border-left: 8rpx solid #4D6BFE;
+}
+.type-storage .plan-icon {
+  background: linear-gradient(135deg, #EAF1FF, #D9E6FF);
+}
+.icon-storage {
+  color: #4D6BFE;
+}
+.type-label-storage {
+  color: #4D6BFE;
+  font-weight: 700;
+}
+.badge {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background: linear-gradient(135deg, #f59e0b, #f97316);
+  color: #ffffff;
+  font-size: 20rpx;
+  padding: 8rpx 24rpx;
+  border-radius: 0 28rpx 0 20rpx;
+  font-weight: 600;
+}
+.plan-head {
+  display: flex;
+  align-items: center;
+}
+.plan-icon {
+  background: #ffffff;
+  box-shadow: 0 6rpx 18rpx rgba(25, 28, 43, 0.07);
+}
+.plan-info {
+  flex: 1;
+  margin-left: 24rpx;
+}
+.plan-name {
+  font-size: 32rpx;
+  font-weight: 700;
+}
+.plan-type {
+  font-size: 23rpx;
+  margin-top: 6rpx;
+}
+.plan-arrow {
+  color: #C6CBDD;
+  font-size: 44rpx;
+}
+.plan-intro {
+  font-size: 25rpx;
+  color: #5C6374;
+  margin-top: 18rpx;
+  line-height: 1.6;
+}
+.feature-tags {
+  margin-top: 20rpx;
+  display: flex;
+  flex-wrap: wrap;
+}
+.type-vip .tag {
+  background: #FEF4E2;
+  color: #d97706;
+}
+
+.plan-icon-img { width: 44rpx; height: 44rpx; }
+.tag-ic { width: 22rpx; height: 22rpx; margin-right: 8rpx; }
+.feature-tags .tag { display: inline-flex; align-items: center; }

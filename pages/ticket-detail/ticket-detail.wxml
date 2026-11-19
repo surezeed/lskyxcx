@@ -1,0 +1,50 @@
+<view class="page-theme {{theme}}">
+<view wx:if="{{loading}}" class="loading-tip" style="margin-top:200rpx">加载中...</view>
+
+<block wx:if="{{ticket}}">
+  <!-- 工单信息 -->
+  <view class="card">
+    <view class="detail-head">
+      <view class="detail-title">{{ticket.title}}</view>
+      <view class="detail-no">工单号 {{ticket.issue_no}}</view>
+    </view>
+    <view class="detail-content">{{ticket.content}}</view>
+    <view class="detail-meta" wx:if="{{ticket.created_at}}">提交于 {{ticket.created_at}}</view>
+  </view>
+
+  <!-- 回复记录 -->
+  <view class="section-head">
+    <text class="section-title">回复记录({{replies.length}})</text>
+  </view>
+  <view class="card" wx:if="{{replies.length}}">
+    <view class="msg-row {{item.isStaff ? 'msg-staff' : ''}}" wx:for="{{replies}}" wx:key="id">
+      <view class="msg-avatar"><image class="msg-avatar-ic" src="{{item.isStaff ? '/images/li/headset-white.png' : '/images/li/user-white.png'}}" /></view>
+      <view class="msg-body">
+        <view class="msg-meta">{{item.isStaff ? item.staffName + ' · 客服' : '我'}} · {{item.createdAt}}</view>
+        <view class="msg-bubble {{item.isStaff ? 'bubble-staff' : ''}}">{{item.content}}</view>
+      </view>
+    </view>
+  </view>
+  <view wx:else class="empty-mini">暂无回复</view>
+
+  <!-- 回复输入 / 已关闭 -->
+  <view class="reply-bar" wx:if="{{!closed}}">
+    <input class="reply-input" placeholder="输入回复内容..." placeholder-class="ph"
+           value="{{replyText}}" bindinput="onInput" confirm-type="send"
+           bindconfirm="send" disabled="{{sending}}" />
+    <view class="send-btn {{replyText ? 'send-active' : ''}}" bindtap="send">
+      {{sending ? '...' : '发送'}}
+    </view>
+  </view>
+  <view wx:else class="closed-tip">工单已关闭,如仍有问题请重新提交工单</view>
+
+  <!-- 操作 -->
+  <view class="card op-card" wx:if="{{!closed}}">
+    <button class="btn-plain" bindtap="closeTicket">关闭工单</button>
+  </view>
+  <view class="card op-card">
+    <button class="btn-danger-plain" bindtap="del">删除工单</button>
+  </view>
+  <view class="bottom-space"></view>
+</block>
+</view>

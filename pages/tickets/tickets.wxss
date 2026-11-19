@@ -1,0 +1,92 @@
+.top-bar {
+  display: flex;
+  align-items: center;
+  padding: 32rpx 32rpx 8rpx;
+}
+.top-title {
+  flex: 1;
+}
+.top-name {
+  font-size: 34rpx;
+  font-weight: 700;
+}
+.top-desc {
+  display: block;
+  font-size: 23rpx;
+  color: #9AA1B2;
+  margin-top: 6rpx;
+}
+.add-btn {
+  background: linear-gradient(135deg, #4D6BFE, #7C5CFC);
+  color: #ffffff;
+  font-size: 25rpx;
+  font-weight: 600;
+  border-radius: 28rpx;
+  padding: 12rpx 32rpx;
+  box-shadow: 0 8rpx 20rpx rgba(77, 107, 254, 0.3);
+}
+.ph {
+  color: #9AA1B2;
+}
+
+.ticket-list {
+  padding-bottom: 20rpx;
+}
+.ticket-item {
+  position: relative;
+  padding: 30rpx 32rpx;
+}
+.ticket-head {
+  display: flex;
+  align-items: center;
+}
+.level-badge {
+  font-size: 20rpx;
+  font-weight: 700;
+  border-radius: 8rpx;
+  padding: 4rpx 16rpx;
+  margin-right: 16rpx;
+}
+.level-low {
+  color: #10B981;
+  background: #E7F8F2;
+}
+.level-medium {
+  color: #d97706;
+  background: #FEF4E2;
+}
+.level-high {
+  color: #F43F5E;
+  background: #FEECEF;
+}
+.closed-badge {
+  font-size: 20rpx;
+  color: #9AA1B2;
+  background: #F2F4F9;
+  border-radius: 8rpx;
+  padding: 4rpx 16rpx;
+  margin-right: 16rpx;
+}
+.ticket-time {
+  font-size: 22rpx;
+  color: #9AA1B2;
+}
+.ticket-title {
+  font-size: 30rpx;
+  font-weight: 600;
+  margin-top: 18rpx;
+  padding-right: 40rpx;
+}
+.ticket-no {
+  font-size: 22rpx;
+  color: #9AA1B2;
+  margin-top: 10rpx;
+}
+.ticket-arrow {
+  position: absolute;
+  right: 28rpx;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #C6CBDD;
+  font-size: 44rpx;
+}

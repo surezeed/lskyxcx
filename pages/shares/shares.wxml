@@ -1,0 +1,154 @@
+<view class="page-theme {{theme}}">
+<!-- 分享页 · 排行榜卡片风 v1.0 -->
+<view class="rank-page">
+  <view class="bg-mesh"></view>
+
+  <!-- ===== 未登录 ===== -->
+  <view wx:if="{{!logged}}" class="card empty">
+    <image class="empty-icon" src="/images/li/lock-gray.png" />
+    <view>登录后可管理图片/相册分享</view>
+    <button class="btn-primary empty-btn" bindtap="goLogin">去登录</button>
+  </view>
+
+  <block wx:else>
+    <!-- 顶部操作（搜索 + 新建，入口保留） -->
+    <view class="toolbar">
+      <view class="search-box">
+        <image class="search-icon" src="/images/li/search-gray.png" />
+        <input class="search-input" placeholder="搜索分享内容" value="{{keyword}}"
+               bindinput="onSearchInput" bindconfirm="doSearch" confirm-type="search" />
+      </view>
+      <view class="add-btn" bindtap="toggleForm">{{showForm ? '收起' : '+ 分享'}}</view>
+    </view>
+
+    <!-- 类型筛选 -->
+    <view class="filter-bar">
+      <view class="chip {{typeFilter === '' ? 'chip-active' : ''}}" data-type="" bindtap="setFilter">全部</view>
+      <view class="chip {{typeFilter === 'photo' ? 'chip-active' : ''}}" data-type="photo" bindtap="setFilter"><image class="chip-ic" src="/images/li/photo-blue.png" /> 图片</view>
+      <view class="chip {{typeFilter === 'album' ? 'chip-active' : ''}}" data-type="album" bindtap="setFilter"><image class="chip-ic" src="/images/li/folder-blue.png" /> 相册</view>
+    </view>
+
+    <!-- 新建分享表单（原样保留） -->
+    <view class="card form-card" wx:if="{{showForm}}">
+      <view class="block-title">创建分享</view>
+      <view class="type-toggle">
+        <view class="type-opt {{formType === 'photo' ? 'type-opt-active' : ''}}" data-type="photo" bindtap="setType"><image class="chip-ic" src="/images/li/photo-blue.png" /> 图片</view>
+        <view class="type-opt {{formType === 'album' ? 'type-opt-active' : ''}}" data-type="album" bindtap="setType"><image class="chip-ic" src="/images/li/folder-blue.png" /> 相册</view>
+      </view>
+      <picker range="{{objectNames}}" bindchange="pickObject">
+        <view class="form-row picker-row">
+          <text class="row-label">{{formType === 'photo' ? '选择图片' : '选择相册'}}</text>
+          <text class="row-value {{objectIndex < 0 ? 'row-placeholder' : ''}}">
+            {{objectIndex < 0 ? '点击选择' : objectNames[objectIndex]}}
+          </text>
+          <text class="row-arrow">›</text>
+        </view>
+      </picker>
+      <input class="form-input" placeholder="分享内容/备注(选填)" value="{{content}}"
+             data-field="content" bindinput="onFormInput" />
+      <input class="form-input" placeholder="访问密码(选填)" value="{{password}}"
+             data-field="password" bindinput="onFormInput" />
+      <picker mode="date" value="{{expiredAt}}" bindchange="onExpireChange">
+        <view class="form-row picker-row">
+          <text class="row-label">有效期至</text>
+          <text class="row-value {{expiredAt ? '' : 'row-placeholder'}}">{{expiredAt || '永久有效(点击设置)'}}</text>
+          <text class="row-arrow">›</text>
+        </view>
+      </picker>
+      <button class="btn-primary form-submit" loading="{{creating}}" bindtap="create">创建并复制链接</button>
+    </view>
+
+    <!-- 加载中 -->
+    <view wx:if="{{loading && !shares.length}}" class="empty-wrap"><view class="empty-text">加载中...</view></view>
+
+    <!-- 空状态 -->
+    <view wx:elif="{{!shares.length}}" class="card empty">
+      <image class="empty-icon" src="/images/li/link-gray.png" />
+      <view>还没有分享，点击创建第一个吧</view>
+      <button class="btn-primary empty-btn" bindtap="toggleForm">+ 创建分享</button>
+    </view>
+
+    <block wx:else>
+      <!-- ===== HERO · TOP 01 最新分享 ===== -->
+      <view class="hero hero-share">
+        <view class="hero-shade"></view>
+        <view class="hero-ops">
+          <view class="hero-op" catchtap="del" data-id="{{shares[0].id}}">
+            <image class="hero-op-ic" src="/images/li/trash-red.png" />
+          </view>
+        </view>
+        <view class="hero-row">
+          <view class="hero-no">TOP 01</view>
+        </view>
+        <view class="hero-name hero-name-sm">{{shares[0].content || shares[0].typeText + '分享'}}</view>
+        <view class="sr-pills">
+          <view class="d-pill">{{shares[0].typeText}}</view>
+          <view class="d-pill">浏览<b class="d-num">{{shares[0].viewCount}}</b></view>
+          <view class="d-pill">点赞<b class="d-num">{{shares[0].likeCount}}</b></view>
+          <view class="d-pill d-pill-gold" wx:if="{{shares[0].hasPwd}}">密码</view>
+        </view>
+        <view class="sr-link" bindtap="copyLink" data-link="{{shares[0].link}}">
+          <text class="sr-link-txt">{{shares[0].link}}</text>
+          <text class="sr-copy">复制</text>
+        </view>
+        <view class="sr-foot">
+          <view class="sr-foot-left">
+            <text class="sr-date">{{shares[0].createdAt}}</text>
+            <text class="sr-expire" wx:if="{{shares[0].expiredAt}}">⏰ 有效期至 {{shares[0].expiredAt}}</text>
+          </view>
+          <view class="sr-ops">
+            <view class="sr-op" bindtap="copyLink" data-link="{{shares[0].link}}">复制链接</view>
+            <view class="sr-op sr-op-danger" bindtap="del" data-id="{{shares[0].id}}">删除</view>
+          </view>
+        </view>
+      </view>
+
+      <!-- ===== 排行列表 · TOP 02 起 ===== -->
+      <block wx:if="{{shares.length > 1}}">
+        <view class="rank-list-head">
+          <text class="rank-list-title">分享榜</text>
+          <text class="rank-list-en">SHARES RANKING</text>
+        </view>
+        <view class="rank-list">
+          <block wx:for="{{shares}}" wx:key="id">
+            <view class="rank-card" wx:if="{{index > 0}}">
+              <view class="rc-bg">
+                <view class="rc-glow"></view>
+                <image wx:if="{{item.cover}}" class="rc-img" src="{{item.cover}}" mode="aspectFill" lazy-load />
+                <view class="rc-shade"></view>
+              </view>
+              <view class="rc-top">
+                <view class="rc-title">{{item.content || item.typeText + '分享'}}</view>
+                <view class="rank-no {{index < 3 ? 'rank-no-gold' : ''}}">TOP {{index + 1 < 10 ? '0' + (index + 1) : index + 1}}</view>
+              </view>
+              <view class="sr-pills">
+                <view class="d-pill">{{item.typeText}}</view>
+                <view class="d-pill">浏览<b class="d-num">{{item.viewCount}}</b></view>
+                <view class="d-pill">点赞<b class="d-num">{{item.likeCount}}</b></view>
+                <view class="d-pill d-pill-gold" wx:if="{{item.hasPwd}}">密码</view>
+              </view>
+              <view class="sr-link" bindtap="copyLink" data-link="{{item.link}}">
+                <text class="sr-link-txt">{{item.link}}</text>
+                <text class="sr-copy">复制</text>
+              </view>
+              <view class="sr-foot">
+                <view class="sr-foot-left">
+                  <text class="sr-date">{{item.createdAt}}</text>
+                  <text class="sr-expire" wx:if="{{item.expiredAt}}">⏰ 有效期至 {{item.expiredAt}}</text>
+                </view>
+                <view class="sr-ops">
+                  <view class="sr-op" bindtap="copyLink" data-link="{{item.link}}">复制链接</view>
+                  <view class="sr-op sr-op-danger" bindtap="del" data-id="{{item.id}}">删除</view>
+                </view>
+              </view>
+            </view>
+          </block>
+        </view>
+      </block>
+
+      <view class="load-more" wx:if="{{loadingMore}}">加载中...</view>
+      <view class="load-more end" wx:elif="{{!hasMore}}">— 没有更多了 —</view>
+    </block>
+  </block>
+</view>
+</view>

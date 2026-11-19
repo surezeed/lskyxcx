@@ -1,0 +1,147 @@
+<view class="page-theme {{theme}}">
+<view wx:if="{{loading}}" class="dt-loading">加载中...</view>
+
+<block wx:if="{{photo}}">
+  <!-- 刊头:橙色大标题 -->
+  <view class="dt-head">
+    <view class="dt-kicker">PHOTO · NO.{{photo.id}}</view>
+    <view class="dt-title">{{photo.name || photo.filename}}</view>
+  </view>
+
+  <!-- 元信息行:徽标 + 日期 + 数据胶囊 -->
+  <view class="dt-meta">
+    <view class="dt-meta-l">
+      <view class="dt-avatar">
+        <image class="dt-avatar-ic" src="/images/li/photo-white.png" />
+      </view>
+      <view class="dt-meta-txt">
+        <view class="dt-author">WordImages</view>
+        <view class="dt-date">{{meta.date}}</view>
+      </view>
+    </view>
+    <view class="dt-pills">
+      <view class="dt-pill">
+        <text class="dt-pill-k">SIZE</text>
+        <text class="dt-pill-v">{{meta.size || '-'}}</text>
+      </view>
+      <view class="dt-pill dt-pill-green">
+        <text class="dt-pill-k">EXT</text>
+        <text class="dt-pill-v">{{meta.ext}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 封面取景框 -->
+  <view class="cover-card">
+    <view class="cover-bar">
+      <text class="cover-cn">封面</text>
+      <text class="cover-en">COVER</text>
+    </view>
+    <view class="cover-body">
+      <image class="cover-img" src="{{photo.public_url}}" mode="widthFix" bindtap="preview" />
+    </view>
+    <view class="cover-zoom" bindtap="preview">
+      <image class="cover-zoom-ic" src="/images/li/search-white.png" />
+    </view>
+  </view>
+
+  <!-- 简介 INTRO -->
+  <view class="quote-card" wx:if="{{photo.intro || (photo.tags && photo.tags.length)}}">
+    <view class="quote-head">
+      <view class="quote-bar"></view>
+      <text class="quote-cn">简介</text>
+      <text class="quote-en">INTRO</text>
+      <text class="quote-mark q-open">“</text>
+    </view>
+    <view class="quote-txt" wx:if="{{photo.intro}}">{{photo.intro}}</view>
+    <view class="quote-tags" wx:if="{{photo.tags && photo.tags.length}}">
+      <text class="quote-tag" wx:for="{{photo.tags}}" wx:key="id"># {{item.name}}</text>
+    </view>
+    <text class="quote-mark q-close">”</text>
+  </view>
+
+  <!-- 信息 DETAIL -->
+  <view class="quote-card">
+    <view class="quote-head">
+      <view class="quote-bar"></view>
+      <text class="quote-cn">信息</text>
+      <text class="quote-en">DETAIL</text>
+    </view>
+    <view class="info-row" wx:for="{{rows}}" wx:key="index">
+      <text class="info-label">{{item[0]}}</text>
+      <text class="info-value">{{item[1] || '-'}}</text>
+    </view>
+    <view class="link-box" bindtap="copyLink">{{photo.public_url}}</view>
+    <view class="copy-row">
+      <view class="copy-btn" bindtap="copyLink">
+        <image class="copy-ic" src="/images/li/link-white.png" />
+        <text>复制链接</text>
+      </view>
+      <view class="copy-btn" bindtap="copyMd">
+        <image class="copy-ic" src="/images/li/edit-white.png" />
+        <text>复制 MD</text>
+      </view>
+      <view class="copy-btn" bindtap="copyPath">
+        <image class="copy-ic" src="/images/li/copy-white.png" />
+        <text>复制路径</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 编辑面板 -->
+  <view class="quote-card edit-card" wx:if="{{editing}}">
+    <view class="quote-head">
+      <view class="quote-bar"></view>
+      <text class="quote-cn">编辑</text>
+      <text class="quote-en">EDIT</text>
+    </view>
+    <view class="form-item">
+      <text class="form-label">图片名称</text>
+      <input class="form-input" value="{{form.name}}" data-field="name" bindinput="onInput" />
+    </view>
+    <view class="form-item">
+      <text class="form-label">描述</text>
+      <textarea class="form-textarea" value="{{form.intro}}" data-field="intro"
+                bindinput="onInput" auto-height />
+    </view>
+    <view class="form-item">
+      <text class="form-label">标签(逗号分隔)</text>
+      <input class="form-input" value="{{form.tags}}" data-field="tags" bindinput="onInput" />
+    </view>
+    <view class="form-item">
+      <text class="form-label">所在相册</text>
+      <picker range="{{albumNames}}" value="{{albumIndex + 1}}" bindchange="onAlbum">
+        <view class="picker-value">{{albumNames[albumIndex + 1] || '不放入相册'}}</view>
+      </picker>
+    </view>
+    <view class="switch-row">
+      <view class="switch-title">公开图片</view>
+      <switch checked="{{form.is_public}}" bindchange="onPublic" color="#F5822D" />
+    </view>
+    <button class="save-btn" bindtap="save">保存修改</button>
+  </view>
+
+  <!-- 底部留白(浮动操作坞) -->
+  <view class="dock-space"></view>
+
+  <!-- 浮动操作坞:返回 / 编辑 / 删除 -->
+  <view class="dock">
+    <view class="dock-item" bindtap="back">
+      <view class="dock-circle dock-white"><view class="dock-back"></view></view>
+      <text class="dock-label">返回</text>
+    </view>
+    <view class="dock-item" bindtap="toggleEdit">
+      <view class="dock-circle dock-orange">
+        <image class="dock-ic" src="/images/li/edit-white.png" />
+      </view>
+      <text class="dock-label dock-label-hot">{{editing ? '收起' : '编辑'}}</text>
+    </view>
+    <view class="dock-item" bindtap="del">
+      <view class="dock-circle dock-dark">
+        <image class="dock-ic" src="/images/li/trash-white.png" />
+      </view>
+      <text class="dock-label">删除</text>
+    </view>
+  </view>
+</block>
+</view>

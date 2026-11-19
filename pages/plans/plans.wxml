@@ -1,0 +1,44 @@
+<view class="page-theme {{theme}}">
+<view class="page">
+  <!-- 类型筛选 -->
+  <view class="filter-bar">
+    <view class="chip {{typeFilter === 'all' ? 'chip-active' : ''}}"
+          data-type="all" bindtap="setFilter">全部</view>
+    <view class="chip {{typeFilter === 'vip' ? 'chip-active' : ''}}"
+          data-type="vip" bindtap="setFilter"><image class="chip-ic" src="/images/li/crown-orange.png" /> VIP套餐</view>
+    <view class="chip {{typeFilter === 'storage' ? 'chip-active' : ''}}"
+          data-type="storage" bindtap="setFilter"><image class="chip-ic" src="/images/li/database-blue.png" /> 容量套餐</view>
+  </view>
+
+  <!-- 套餐列表 -->
+  <view wx:if="{{filtered.length}}" class="plan-list">
+    <view class="card plan-item {{item.typeCls}}" wx:for="{{filtered}}" wx:key="id"
+          data-id="{{item.id}}" bindtap="openDetail">
+      <view wx:if="{{item.badge}}" class="badge">{{item.badge}}</view>
+      <view class="plan-head">
+        <view class="icon-tile plan-icon {{item.typeCls === 'type-vip' ? 'icon-vip' : 'icon-storage'}}">
+          <image class="plan-icon-img" src="{{item.typeCls === 'type-vip' ? '/images/li/crown-orange.png' : '/images/li/database-blue.png'}}" />
+        </view>
+        <view class="plan-info">
+          <view class="plan-name">{{item.name}}</view>
+          <view class="plan-type {{item.typeCls === 'type-vip' ? 'type-label-vip' : 'type-label-storage'}}">
+            {{item.typeLabel}}套餐
+          </view>
+        </view>
+        <view class="plan-arrow">›</view>
+      </view>
+      <view class="plan-intro" wx:if="{{item.intro}}">{{item.intro}}</view>
+      <view class="feature-tags">
+        <view class="tag" wx:for="{{item.featureList}}" wx:for-item="f" wx:key="*this"><image class="tag-ic" src="/images/li/check-green.png" />{{f}}</view>
+      </view>
+    </view>
+  </view>
+
+  <view wx:elif="{{!loading}}" class="empty">
+    <image class="empty-icon" src="/images/li/gem-gray.png" />
+    <view>暂无可购买的套餐</view>
+  </view>
+
+  <view wx:if="{{loading}}" class="loading-tip">加载中...</view>
+</view>
+</view>

@@ -1,0 +1,80 @@
+<view class="page-theme {{theme}}">
+<view class="page">
+  <view class="top-bar">
+    <view class="top-title">
+      <text class="top-name">API 令牌</text>
+      <text class="top-desc">供第三方客户端(如 PicGo)调用上传接口</text>
+    </view>
+    <view class="add-btn" bindtap="toggleForm">{{showForm ? '收起' : '+ 生成'}}</view>
+  </view>
+
+  <!-- 创建表单 -->
+  <view class="card" wx:if="{{showForm}}">
+    <view class="form-item">
+      <text class="form-label">令牌名称</text>
+      <input class="form-input" placeholder="如:我的电脑" placeholder-class="ph"
+             value="{{name}}" data-field="name" bindinput="onInput" />
+    </view>
+
+    <view class="form-item">
+      <view class="label-row">
+        <text class="form-label">权限范围(已选 {{selectedCount}} 项)</text>
+        <text class="perm-all" bindtap="toggleAll">{{allSelected ? '清空' : '全选'}}</text>
+      </view>
+      <view class="perm-tip">勾选该令牌可以执行的操作,如第三方上传工具只需勾选「上传图片」</view>
+      <view wx:if="{{permLoading}}" class="perm-loading">权限清单加载中...</view>
+      <view class="perm-group" wx:for="{{permGroups}}" wx:for-item="g" wx:for-index="gi" wx:key="category">
+        <view class="perm-group-title">{{g.label}}</view>
+        <view class="perm-row {{p.checked ? 'perm-on' : ''}}"
+              wx:for="{{g.items}}" wx:for-item="p" wx:for-index="pi" wx:key="value"
+              data-group="{{gi}}" data-index="{{pi}}" bindtap="togglePerm">
+          <view class="perm-texts">
+            <text class="perm-label">{{p.label}}</text>
+            <text class="perm-detail">{{p.detail}}</text>
+          </view>
+          <view class="perm-check"><image class="perm-check-ic" src="/images/li/check-white.png" /></view>
+        </view>
+      </view>
+    </view>
+
+    <view class="form-item">
+      <text class="form-label">到期时间(可选,格式 yyyy-MM-dd HH:mm:ss)</text>
+      <input class="form-input" placeholder="留空表示永不过期" value="{{expiresAt}}"
+             data-field="expiresAt" bindinput="onInput" />
+    </view>
+    <button class="btn-primary" loading="{{creating}}" disabled="{{creating}}" bindtap="create">生成令牌</button>
+  </view>
+
+  <!-- 创建成功提示 -->
+  <view class="card token-created" wx:if="{{newToken}}">
+    <view class="created-title"><image class="title-ic" src="/images/li/check-green.png" />令牌生成成功,请立即复制保存</view>
+    <view class="created-token">{{newToken}}</view>
+    <button class="btn-primary copy-btn" bindtap="copyNewToken">复制令牌</button>
+  </view>
+
+  <!-- 令牌列表 -->
+  <view wx:if="{{tokens.length}}">
+    <view class="card token-item" wx:for="{{tokens}}" wx:key="id">
+      <view class="token-head">
+        <view class="icon-tile tile-violet"><image class="tile-ic" src="/images/li/key-violet.png" /></view>
+        <view class="token-info">
+          <view class="token-name">{{item.name}}</view>
+          <view class="token-meta">创建于 {{item.createdAt}} · 到期 {{item.expiresAt}}</view>
+          <view class="token-abilities">{{item.abilitiesText}}</view>
+        </view>
+      </view>
+      <view class="token-actions">
+        <view class="action" data-abilities="{{item.abilitiesText}}" bindtap="copyAbilities">复制权限</view>
+        <view class="action action-danger" data-id="{{item.id}}" bindtap="del">删除</view>
+      </view>
+    </view>
+  </view>
+
+  <view wx:elif="{{!loading}}" class="empty">
+    <image class="empty-icon" src="/images/li/key-gray.png" />
+    <view>还没有生成过令牌</view>
+  </view>
+
+  <view wx:if="{{loading}}" class="loading-tip">加载中...</view>
+</view>
+</view>

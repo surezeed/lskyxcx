@@ -1,0 +1,135 @@
+.detail-head {
+  display: flex;
+  flex-direction: column;
+}
+.detail-title {
+  font-size: 34rpx;
+  font-weight: 700;
+}
+.detail-no {
+  font-size: 22rpx;
+  color: #9AA1B2;
+  margin-top: 10rpx;
+}
+.detail-content {
+  font-size: 27rpx;
+  color: #5C6374;
+  line-height: 1.7;
+  margin-top: 22rpx;
+  background: #F2F4F9;
+  border-radius: 16rpx;
+  padding: 22rpx 26rpx;
+}
+.detail-meta {
+  font-size: 22rpx;
+  color: #9AA1B2;
+  margin-top: 16rpx;
+}
+
+.empty-mini {
+  text-align: center;
+  color: #9AA1B2;
+  font-size: 25rpx;
+  padding: 30rpx 0;
+}
+
+/* 对话消息 */
+.msg-row {
+  display: flex;
+  margin-bottom: 30rpx;
+}
+.msg-row:last-child {
+  margin-bottom: 0;
+}
+.msg-staff {
+  flex-direction: row-reverse;
+}
+.msg-avatar {
+  font-size: 40rpx;
+  flex-shrink: 0;
+}
+.msg-body {
+  max-width: 78%;
+  margin-left: 18rpx;
+}
+.msg-staff .msg-body {
+  margin-left: 0;
+  margin-right: 18rpx;
+  text-align: right;
+}
+.msg-meta {
+  font-size: 21rpx;
+  color: #9AA1B2;
+  margin-bottom: 8rpx;
+}
+.msg-bubble {
+  background: rgba(77, 107, 254, 0.1);
+  color: #191C2B;
+  font-size: 26rpx;
+  line-height: 1.6;
+  border-radius: 6rpx 22rpx 22rpx 22rpx;
+  padding: 18rpx 24rpx;
+  word-break: break-all;
+  text-align: left;
+}
+.bubble-staff {
+  background: #F2F4F9;
+  border-radius: 22rpx 6rpx 22rpx 22rpx;
+}
+
+/* 回复输入 */
+.reply-bar {
+  display: flex;
+  align-items: center;
+  background: #ffffff;
+  border-radius: 40rpx;
+  margin: 24rpx 32rpx;
+  padding: 8rpx 8rpx 8rpx 30rpx;
+  box-shadow: 0 8rpx 30rpx rgba(25, 28, 43, 0.07);
+}
+.reply-input {
+  flex: 1;
+  font-size: 27rpx;
+  height: 76rpx;
+}
+.ph {
+  color: #9AA1B2;
+}
+.send-btn {
+  background: #C6CBDD;
+  color: #ffffff;
+  font-size: 26rpx;
+  font-weight: 600;
+  border-radius: 36rpx;
+  padding: 16rpx 38rpx;
+}
+.send-active {
+  background: linear-gradient(135deg, #4D6BFE, #7C5CFC);
+  box-shadow: 0 6rpx 16rpx rgba(77, 107, 254, 0.3);
+}
+.closed-tip {
+  text-align: center;
+  color: #9AA1B2;
+  font-size: 25rpx;
+  padding: 30rpx;
+}
+
+/* 操作按钮 */
+.op-card {
+  padding: 20rpx 36rpx;
+}
+.btn-danger-plain {
+  background: #FEECEF;
+  color: #F43F5E;
+  border-radius: 24rpx;
+  font-size: 30rpx;
+  font-weight: 500;
+  line-height: 88rpx;
+  height: 88rpx;
+}
+.bottom-space {
+  height: 40rpx;
+}
+
+.msg-avatar { display: flex; align-items: center; justify-content: center; }
+.msg-avatar-ic { width: 40rpx; height: 40rpx; }

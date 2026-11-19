@@ -1,0 +1,228 @@
+/* ============ 分享页 · 排行榜卡片风 v1.0 ============ */
+.rank-page { position: relative; z-index: 1; }
+
+/* ---- 顶部操作（保留原样式） ---- */
+.toolbar {
+  display: flex; align-items: center; gap: 20rpx;
+  padding: 28rpx 32rpx 8rpx;
+}
+.search-box {
+  flex: 1; display: flex; align-items: center;
+  background: #ffffff; border-radius: 50rpx; padding: 18rpx 26rpx;
+  box-shadow: 0 10rpx 30rpx rgba(25, 28, 43, 0.07);
+}
+.search-icon { width: 32rpx; height: 32rpx; margin-right: 14rpx; }
+.search-input { flex: 1; font-size: 27rpx; }
+.add-btn {
+  background: linear-gradient(135deg, #4D6BFE, #7C5CFC);
+  color: #fff; font-size: 26rpx; font-weight: 600;
+  padding: 18rpx 30rpx; border-radius: 40rpx;
+  box-shadow: 0 8rpx 20rpx rgba(77, 107, 254, 0.3);
+}
+.filter-bar { display: flex; gap: 16rpx; padding: 20rpx 30rpx; }
+.chip {
+  font-size: 25rpx; color: #5C6374; background: #ffffff;
+  padding: 12rpx 30rpx; border-radius: 999rpx;
+  box-shadow: 0 4rpx 14rpx rgba(25, 28, 43, 0.05);
+}
+.chip-active { color: #4D6BFE; background: rgba(77, 107, 254, 0.1); font-weight: 600; }
+
+/* ---- 新建表单（保留原样式） ---- */
+.form-card { margin: 8rpx 30rpx 24rpx; }
+.type-toggle {
+  display: flex; background: #F2F4F9; border-radius: 20rpx;
+  padding: 8rpx; margin: 20rpx 0 24rpx;
+}
+.type-opt {
+  flex: 1; text-align: center; font-size: 26rpx; color: #5C6374;
+  padding: 16rpx 0; border-radius: 14rpx;
+}
+.type-opt-active {
+  background: #ffffff; color: #4D6BFE; font-weight: 600;
+  box-shadow: 0 4rpx 12rpx rgba(25, 28, 43, 0.1);
+}
+.picker-row {
+  display: flex; align-items: center; background: #F2F4F9;
+  border-radius: 20rpx; padding: 24rpx; margin-bottom: 20rpx;
+}
+.row-label { font-size: 27rpx; font-weight: 600; color: #191C2B; }
+.row-value {
+  flex: 1; text-align: right; font-size: 26rpx; color: #191C2B;
+  overflow: hidden; white-space: nowrap; text-overflow: ellipsis;
+}
+.row-placeholder { color: #9AA1B2; }
+.row-arrow { margin-left: 12rpx; color: #C6CBDD; }
+.form-input {
+  background: #F2F4F9; border-radius: 20rpx; padding: 24rpx;
+  font-size: 27rpx; margin-bottom: 20rpx;
+}
+.form-submit { margin-top: 8rpx; }
+
+/* ---- HERO（TOP 01）---- */
+.hero {
+  position: relative; overflow: hidden;
+  margin: 8rpx 32rpx 0;
+  border-radius: 40rpx; padding: 32rpx; box-sizing: border-box;
+  background: linear-gradient(135deg, #4D6BFE 0%, #7C5CFC 55%, #8B5CF6 100%);
+  box-shadow: 0 20rpx 48rpx rgba(77, 107, 254, 0.28);
+  display: flex; flex-direction: column;
+}
+.hero-shade {
+  position: absolute; left: 0; top: 0; right: 0; bottom: 0;
+  background:
+    linear-gradient(90deg, rgba(10, 12, 20, 0.6) 0%, rgba(10, 12, 20, 0.25) 60%, rgba(10, 12, 20, 0.1) 100%),
+    linear-gradient(0deg, rgba(10, 12, 20, 0.45) 0%, rgba(10, 12, 20, 0) 55%);
+}
+.hero-ops { position: absolute; right: 24rpx; top: 24rpx; display: flex; gap: 14rpx; z-index: 2; }
+.hero-op {
+  width: 56rpx; height: 56rpx; border-radius: 50%;
+  background: rgba(255, 255, 255, 0.16);
+  border: 1rpx solid rgba(255, 255, 255, 0.22);
+  display: flex; align-items: center; justify-content: center;
+}
+.hero-op-ic { width: 26rpx; height: 26rpx; }
+.hero-row { position: relative; z-index: 1; display: flex; align-items: center; margin-bottom: 16rpx; }
+.hero-no {
+  font-family: Georgia, "Times New Roman", serif; font-style: italic;
+  font-size: 24rpx; font-weight: 800; letter-spacing: 2rpx;
+  color: #14161F;
+  background: linear-gradient(135deg, #F5C451, #E0A94A);
+  padding: 8rpx 24rpx; border-radius: 999rpx;
+  box-shadow: 0 6rpx 16rpx rgba(245, 196, 81, 0.35);
+}
+.hero-name {
+  position: relative; z-index: 1;
+  font-size: 44rpx; font-weight: 800; color: #ffffff; line-height: 1.25;
+  display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden;
+}
+.hero-name-sm { font-size: 34rpx; }
+
+/* ---- TOP 角标 ---- */
+.rank-no {
+  flex-shrink: 0;
+  font-family: Georgia, "Times New Roman", serif; font-style: italic;
+  font-size: 22rpx; font-weight: 700; letter-spacing: 1rpx;
+  padding: 8rpx 20rpx; border-radius: 999rpx;
+  color: rgba(255, 255, 255, 0.72);
+  background: rgba(255, 255, 255, 0.08);
+  border: 1rpx solid rgba(255, 255, 255, 0.14);
+}
+.rank-no-gold {
+  color: #F5C451;
+  background: rgba(245, 196, 81, 0.12);
+  border: 1rpx solid rgba(245, 196, 81, 0.55);
+}
+
+/* ---- 数据胶囊 ---- */
+.d-pill {
+  display: inline-flex; align-items: center;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1rpx solid rgba(255, 255, 255, 0.1);
+  border-radius: 999rpx; padding: 8rpx 22rpx;
+  font-size: 22rpx; color: rgba(255, 255, 255, 0.65);
+}
+.d-num {
+  color: #ffffff; font-weight: 700; margin-left: 8rpx;
+  font-family: Georgia, "Times New Roman", serif; font-style: italic;
+}
+.d-pill-gold {
+  color: #F5C451;
+  background: rgba(245, 196, 81, 0.12);
+  border: 1rpx solid rgba(245, 196, 81, 0.4);
+}
+.sr-pills {
+  position: relative; z-index: 1;
+  display: flex; flex-wrap: wrap; gap: 12rpx; margin-top: 18rpx;
+}
+
+/* ---- 链接条（深色半透明） ---- */
+.sr-link {
+  position: relative; z-index: 1;
+  display: flex; align-items: center;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1rpx solid rgba(255, 255, 255, 0.12);
+  border-radius: 18rpx; padding: 18rpx 22rpx; margin-top: 20rpx;
+}
+.sr-link-txt {
+  flex: 1; font-size: 22rpx; color: rgba(255, 255, 255, 0.6);
+  overflow: hidden; white-space: nowrap; text-overflow: ellipsis;
+}
+.sr-copy {
+  font-size: 22rpx; color: #F5C451; font-weight: 600; margin-left: 16rpx;
+}
+
+/* ---- 卡片底行：时间 + 操作 ---- */
+.sr-foot {
+  position: relative; z-index: 1;
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 16rpx; margin-top: 20rpx;
+}
+.sr-foot-left { display: flex; flex-direction: column; gap: 6rpx; min-width: 0; }
+.sr-date { font-size: 21rpx; color: rgba(255, 255, 255, 0.5); }
+.sr-expire { font-size: 21rpx; color: #F5C451; }
+.sr-ops { display: flex; gap: 14rpx; flex-shrink: 0; }
+.sr-op {
+  font-size: 23rpx; font-weight: 600; color: #ffffff;
+  background: rgba(255, 255, 255, 0.12);
+  border: 1rpx solid rgba(255, 255, 255, 0.16);
+  padding: 12rpx 26rpx; border-radius: 999rpx;
+}
+.sr-op-danger {
+  color: #FB7185;
+  background: rgba(244, 63, 94, 0.16);
+  border: 1rpx solid rgba(244, 63, 94, 0.3);
+}
+
+/* ---- 排行列表 ---- */
+.rank-list-head {
+  display: flex; align-items: baseline; justify-content: space-between;
+  margin: 40rpx 36rpx 20rpx;
+}
+.rank-list-title { font-size: 30rpx; font-weight: 800; color: #191C2B; }
+.rank-list-en {
+  font-family: Georgia, "Times New Roman", serif; font-style: italic;
+  font-size: 20rpx; letter-spacing: 3rpx; color: #9AA1B2;
+}
+.rank-list { padding-bottom: 10rpx; }
+.rank-card {
+  position: relative; overflow: hidden;
+  margin: 0 32rpx 24rpx; padding: 28rpx 30rpx; box-sizing: border-box;
+  border-radius: 36rpx;
+  background: #14161F;
+  box-shadow: 0 14rpx 36rpx rgba(20, 22, 31, 0.22);
+  display: flex; flex-direction: column;
+}
+.rc-bg { position: absolute; left: 0; top: 0; right: 0; bottom: 0; }
+.rc-glow {
+  position: absolute; right: -90rpx; top: -90rpx;
+  width: 380rpx; height: 380rpx; border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%,
+    rgba(139, 92, 246, 0.55) 0%, rgba(77, 107, 254, 0.28) 50%, rgba(77, 107, 254, 0) 75%);
+}
+.rc-img { position: absolute; left: 0; top: 0; width: 100%; height: 100%; }
+.rc-shade {
+  position: absolute; left: 0; top: 0; right: 0; bottom: 0;
+  background: linear-gradient(90deg, #14161F 0%, rgba(20, 22, 31, 0.88) 45%, rgba(20, 22, 31, 0.3) 100%);
+}
+.rc-top { position: relative; z-index: 1; display: flex; align-items: flex-start; }
+.rc-title {
+  flex: 1; min-width: 0; margin-right: 20rpx;
+  font-size: 32rpx; font-weight: 700; color: #ffffff; line-height: 1.35;
+  display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden;
+}
+
+/* ---- 空态 / 加载 / 底部提示（保留原样式） ---- */
+.empty-wrap { padding: 120rpx 60rpx; text-align: center; }
+.empty-text { font-size: 27rpx; color: #9AA1B2; }
+.empty-btn { margin-top: 40rpx; width: 320rpx; }
+.load-more {
+  text-align: center; font-size: 24rpx; color: #9AA1B2;
+  padding: 24rpx 0 40rpx;
+}
+.load-more.end { color: #C6CBDD; }
+
+/* 悬浮 tabBar 底部留白 */
+/* 底部留白放在主题根节点内,随主题变色 */
+.page-theme {
+  padding-bottom: calc(180rpx + env(safe-area-inset-bottom));
+}

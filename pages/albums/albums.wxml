@@ -1,0 +1,94 @@
+<view class="page-theme {{theme}}">
+<!-- 相册页 · 排行榜卡片风 v1.0 -->
+<view class="rank-page">
+  <view class="bg-mesh"></view>
+
+  <!-- ===== 未登录 ===== -->
+  <view wx:if="{{!logged}}" class="card empty">
+    <image class="empty-icon" src="/images/li/lock-gray.png" />
+    <view>登录后可管理相册</view>
+    <button class="btn-primary empty-btn" bindtap="goLogin">去登录</button>
+  </view>
+
+  <block wx:else>
+    <!-- ===== 顶栏：标题 + 新建入口 ===== -->
+    <view class="rank-head">
+      <view class="rank-head-txt">
+        <view class="rank-title">相册榜</view>
+        <view class="rank-sub">ALBUMS · TOP RANKING</view>
+      </view>
+      <view class="head-pill" hover-class="img-press" bindtap="addAlbum">+ 新建相册</view>
+    </view>
+
+    <!-- ===== 加载中 ===== -->
+    <view wx:if="{{loading && !albums.length}}" class="loading-tip">加载中...</view>
+
+    <!-- ===== 空状态 ===== -->
+    <view wx:elif="{{!albums.length}}" class="card empty">
+      <image class="empty-icon" src="/images/li/folder-gray.png" />
+      <view>还没有相册，创建第一个吧</view>
+      <button class="btn-primary empty-btn" bindtap="addAlbum">+ 新建相册</button>
+    </view>
+
+    <block wx:else>
+      <!-- ===== HERO · TOP 01 最新相册 ===== -->
+      <view class="hero" hover-class="img-press"
+            data-id="{{albums[0].id}}" data-name="{{albums[0].name}}" bindtap="openAlbum">
+        <image wx:if="{{covers[albums[0].id]}}" class="hero-img" src="{{covers[albums[0].id]}}" mode="aspectFill" />
+        <view class="hero-shade"></view>
+        <view class="hero-ops">
+          <view class="hero-op" catchtap="editAlbum" data-id="{{albums[0].id}}" data-name="{{albums[0].name}}">
+            <image class="hero-op-ic" src="/images/li/edit-gray.png" />
+          </view>
+          <view class="hero-op" catchtap="deleteAlbum" data-id="{{albums[0].id}}">
+            <image class="hero-op-ic" src="/images/li/trash-red.png" />
+          </view>
+        </view>
+        <view class="hero-no">TOP 01</view>
+        <view class="hero-name">{{albums[0].name}}</view>
+        <view class="hero-tag">
+          <view class="hero-tag-ic"><image class="hero-tag-img" src="/images/li/folder-white.png" /></view>
+          <text>最新更新 · {{albums[0].image_num || 0}} 张照片</text>
+        </view>
+      </view>
+
+      <!-- ===== 排行列表 · TOP 02 起 ===== -->
+      <block wx:if="{{albums.length > 1}}">
+        <view class="rank-list-head">
+          <text class="rank-list-title">全部相册</text>
+          <text class="rank-list-en">RANKING LIST</text>
+        </view>
+        <view class="rank-list">
+          <block wx:for="{{albums}}" wx:key="id">
+            <view class="rank-card" wx:if="{{index > 0}}" hover-class="img-press"
+                  data-id="{{item.id}}" data-name="{{item.name}}" bindtap="openAlbum">
+              <view class="rc-bg">
+                <view class="rc-glow"></view>
+                <image wx:if="{{covers[item.id]}}" class="rc-img" src="{{covers[item.id]}}" mode="aspectFill" lazy-load />
+                <view class="rc-shade"></view>
+              </view>
+              <view class="rc-top">
+                <view class="rc-title">{{item.name}}</view>
+                <view class="rank-no {{index < 3 ? 'rank-no-gold' : ''}}">TOP {{index + 1 < 10 ? '0' + (index + 1) : index + 1}}</view>
+              </view>
+              <view class="rc-bottom">
+                <view class="d-pill">照片<b class="d-num">{{item.image_num || 0}}</b></view>
+                <view class="rc-ops">
+                  <view class="rc-op" catchtap="editAlbum" data-id="{{item.id}}" data-name="{{item.name}}">
+                    <image class="rc-op-ic" src="/images/li/edit-gray.png" />
+                  </view>
+                  <view class="rc-op" catchtap="deleteAlbum" data-id="{{item.id}}">
+                    <image class="rc-op-ic" src="/images/li/trash-red.png" />
+                  </view>
+                </view>
+              </view>
+            </view>
+          </block>
+        </view>
+      </block>
+
+      <view wx:if="{{loading}}" class="loading-tip">加载中...</view>
+    </block>
+  </block>
+</view>
+</view>

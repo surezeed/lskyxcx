@@ -1,0 +1,72 @@
+<view class="page-theme {{theme}}">
+<view class="page">
+  <!-- 上传选项 -->
+  <view class="card">
+    <view class="form-item">
+      <text class="form-label">储存策略</text>
+      <picker range="{{storageNames}}" value="{{storageIndex}}" bindchange="onStorage">
+        <view class="picker-value">{{storageNames[storageIndex] || '默认储存'}}</view>
+      </picker>
+    </view>
+
+    <view class="form-item" wx:if="{{loggedHint !== 'guest'}}">
+      <text class="form-label">放入相册(可选)</text>
+      <picker range="{{albumNames}}" value="{{albumIndex + 1}}" bindchange="onAlbum">
+        <view class="picker-value">{{albumNames[albumIndex + 1] || '不放入相册'}}</view>
+      </picker>
+    </view>
+
+    <view class="form-item">
+      <text class="form-label">图片描述(可选)</text>
+      <input class="form-input" placeholder="一句话描述这批图片" value="{{intro}}"
+             data-field="intro" bindinput="onInput" />
+    </view>
+
+    <view class="form-item">
+      <text class="form-label">标签(多个用逗号分隔,登录用户有效)</text>
+      <input class="form-input" placeholder="如:摄影,风景" value="{{tags}}"
+             data-field="tags" bindinput="onInput" />
+    </view>
+
+    <view class="switch-row">
+      <view>
+        <view class="switch-title">公开图片</view>
+        <view class="switch-desc">公开后可在图片广场被看到</view>
+      </view>
+      <switch checked="{{isPublic}}" bindchange="onPublic" color="#3b82f6" />
+    </view>
+  </view>
+
+  <!-- 已选图片 -->
+  <view class="card">
+    <view class="head-row">
+      <text class="head-title">已选图片({{images.length}})</text>
+      <text wx:if="{{images.length && !uploading}}" class="head-link" bindtap="clearDone">清除已完成</text>
+    </view>
+
+    <view wx:if="{{images.length}}" class="img-grid">
+      <view class="img-cell" wx:for="{{images}}" wx:key="path">
+        <image class="thumb" src="{{item.url || item.path}}" mode="aspectFill"
+               data-url="{{item.url}}" data-path="{{item.path}}" bindtap="preview" />
+        <view wx:if="{{item.status === 'uploading'}}" class="mask">上传中...</view>
+        <view wx:elif="{{item.status === 'done'}}" class="mask mask-done" data-url="{{item.url}}" catchtap="copyUrl"><image class="mask-ic" src="/images/li/check-white.png" />点按复制链接</view>
+        <view wx:elif="{{item.status === 'fail'}}" class="mask mask-fail">失败</view>
+        <view wx:if="{{item.status !== 'uploading' && !uploading}}" class="remove"
+              data-index="{{index}}" catchtap="remove">✕</view>
+      </view>
+      <view wx:if="{{!uploading}}" class="img-cell add-cell" bindtap="choose">+</view>
+    </view>
+    <view wx:else class="choose-area" bindtap="choose">
+      <image class="choose-icon" src="/images/li/camera-blue.png" />
+      <view>点击选择图片(最多 9 张)</view>
+    </view>
+  </view>
+
+  <view class="card">
+    <button class="btn-primary" bindtap="start" loading="{{uploading}}" disabled="{{uploading || !images.length}}">
+      {{uploading ? '正在上传...' : '开始上传'}}
+    </button>
+    <view class="upload-tip">未登录也可以游客上传;登录后可管理图片</view>
+  </view>
+</view>
+</view>

@@ -1,0 +1,122 @@
+<view class="page-theme {{theme}}">
+<!-- 未登录 -->
+<view wx:if="{{!logged}}" class="hero-guest">
+  <view class="blob blob-1"></view>
+  <view class="blob blob-2"></view>
+  <view class="hero-content">
+    <image class="hero-mark" src="/images/li/user-white.png" />
+    <view class="hero-title">未登录</view>
+    <view class="hero-sub">登录后管理你的图片和相册</view>
+    <button class="btn-primary hero-btn" bindtap="goLogin">去登录</button>
+  </view>
+</view>
+
+<block wx:else>
+  <!-- 渐变头部 -->
+  <view class="hero-card" wx:if="{{profile}}">
+    <view class="blob blob-1"></view>
+    <view class="blob blob-2"></view>
+    <image class="hero-star hero-star-1" src="/images/li/star-white.png" />
+    <image class="hero-star hero-star-2" src="/images/li/planet-white.png" />
+    <view class="user-row">
+      <image class="avatar" src="{{profile.avatar_url}}" mode="aspectFill" wx:if="{{profile.avatar_url}}" />
+      <view class="avatar avatar-placeholder" wx:else>{{profile.name ? profile.name[0] : 'U'}}</view>
+      <view class="user-info">
+        <view class="user-name">{{profile.name}}</view>
+        <view class="user-group">{{groupName}} · @{{profile.username}}</view>
+      </view>
+      <view class="hero-badge">PRO</view>
+    </view>
+    <view class="edit-btn" bindtap="goEdit"><image class="edit-btn-ic" src="/images/li/edit-white.png" />编辑资料</view>
+
+    <view class="storage">
+      <view class="storage-head">
+        <text>存储空间</text>
+        <text class="storage-num">{{usageText}}({{usagePercent}}%)</text>
+      </view>
+      <view class="bar">
+        <view class="bar-inner" style="width: {{usagePercent}}%"></view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 数据统计 -->
+  <view class="stats-card" wx:if="{{profile}}">
+    <view class="stat" bindtap="goGallery">
+      <view class="stat-num stat-blue">{{profile.photo_count}}</view>
+      <view class="stat-label">图片</view>
+    </view>
+    <view class="stat-divider"></view>
+    <view class="stat" bindtap="goAlbums">
+      <view class="stat-num stat-violet">{{profile.album_count}}</view>
+      <view class="stat-label">相册</view>
+    </view>
+    <view class="stat-divider"></view>
+    <view class="stat">
+      <view class="stat-num stat-green">{{profile.share_count}}</view>
+      <view class="stat-label">分享</view>
+    </view>
+    <view class="stat-divider"></view>
+    <view class="stat">
+      <view class="stat-num stat-orange">{{profile.order_count}}</view>
+      <view class="stat-label">订单</view>
+    </view>
+  </view>
+
+  <!-- 菜单 -->
+  <view class="card menu-card">
+    <view class="menu-item" bindtap="goUpload">
+      <view class="icon-tile tile-blue"><image class="tile-ic" src="/images/li/upload-blue.png" /></view>
+      <text class="menu-text">上传图片</text>
+      <text class="menu-arrow">›</text>
+    </view>
+    <view class="menu-item" bindtap="goAlbums">
+      <view class="icon-tile tile-violet"><image class="tile-ic" src="/images/li/folder-violet.png" /></view>
+      <text class="menu-text">相册管理</text>
+      <text class="menu-arrow">›</text>
+    </view>
+    <view class="menu-item" bindtap="goPlans">
+      <view class="icon-tile tile-gold"><image class="tile-ic" src="/images/li/gem-orange.png" /></view>
+      <text class="menu-text">套餐中心</text>
+      <text class="menu-value">{{profile.group_count}} 个角色组 · {{profile.capacity_count}} 个容量</text>
+      <text class="menu-arrow">›</text>
+    </view>
+    <view class="menu-item" bindtap="goTokens">
+      <view class="icon-tile tile-blue"><image class="tile-ic" src="/images/li/key-blue.png" /></view>
+      <text class="menu-text">Token 管理</text>
+      <text class="menu-arrow">›</text>
+    </view>
+    <view class="menu-item" bindtap="goTickets">
+      <view class="icon-tile tile-cyan"><image class="tile-ic" src="/images/li/ticket-cyan.png" /></view>
+      <text class="menu-text">工单中心</text>
+      <text class="menu-arrow">›</text>
+    </view>
+    <view class="menu-item">
+      <view class="icon-tile tile-green"><image class="tile-ic" src="/images/li/mail-green.png" /></view>
+      <text class="menu-text">邮箱</text>
+      <text class="menu-value">{{profile.email || '未绑定'}}</text>
+    </view>
+    <view class="menu-item">
+      <view class="icon-tile tile-orange"><image class="tile-ic" src="/images/li/calendar-orange.png" /></view>
+      <text class="menu-text">注册时间</text>
+      <text class="menu-value">{{profile.created_at}}</text>
+    </view>
+  </view>
+
+  <view class="card menu-card">
+    <view class="menu-item" bindtap="clearCache">
+      <view class="icon-tile tile-cyan"><image class="tile-ic" src="/images/li/clean-cyan.png" /></view>
+      <text class="menu-text">清除缓存</text>
+      <text class="menu-value">{{cacheSize}}</text>
+      <text class="menu-arrow">›</text>
+    </view>
+    <view class="menu-item menu-logout" bindtap="logout">
+      <view class="icon-tile tile-red"><image class="tile-ic" src="/images/li/logout-red.png" /></view>
+      <text class="menu-text menu-logout-text">退出登录</text>
+      <text class="menu-arrow">›</text>
+    </view>
+  </view>
+
+  <view class="footer">WordImages 图床 · wordimges.com</view>
+</block>
+</view>
