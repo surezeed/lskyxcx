@@ -1,0 +1,73 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/gallery/gallery",
+    "pages/albums/albums",
+    "pages/profile/profile",
+    "pages/login/login",
+    "pages/register/register",
+    "pages/upload/upload",
+    "pages/photo-detail/photo-detail",
+    "pages/profile-edit/profile-edit",
+    "pages/plans/plans",
+    "pages/plan-detail/plan-detail",
+    "pages/tokens/tokens",
+    "pages/tickets/tickets",
+    "pages/ticket-detail/ticket-detail",
+    "pages/shares/shares"
+  ],
+  "window": {
+    "navigationBarBackgroundColor": "#ffffff",
+    "navigationBarTitleText": "WordImages 图床",
+    "navigationBarTextStyle": "black",
+    "backgroundColor": "#F4F5FA",
+    "backgroundTextStyle": "dark"
+  },
+  "tabBar": {
+    "color": "#9AA1B2",
+    "selectedColor": "#4D6BFE",
+    "backgroundColor": "#ffffff",
+    "borderStyle": "white",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "首页",
+        "iconPath": "images/tab-home.png",
+        "selectedIconPath": "images/tab-home-active.png"
+      },
+      {
+        "pagePath": "pages/gallery/gallery",
+        "text": "图库",
+        "iconPath": "images/tab-gallery.png",
+        "selectedIconPath": "images/tab-gallery-active.png"
+      },
+      {
+        "pagePath": "pages/albums/albums",
+        "text": "相册",
+        "iconPath": "images/tab-albums.png",
+        "selectedIconPath": "images/tab-albums-active.png"
+      },
+      {
+        "pagePath": "pages/shares/shares",
+        "text": "分享",
+        "iconPath": "images/tab-share.png",
+        "selectedIconPath": "images/tab-share-active.png"
+      },
+      {
+        "pagePath": "pages/profile/profile",
+        "text": "我的",
+        "iconPath": "images/tab-user.png",
+        "selectedIconPath": "images/tab-user-active.png"
+      }
+    ],
+    "custom": true
+  },
+  "permission": {
+    "scope.writePhotosAlbum": {
+      "desc": "用于保存图片到相册"
+    }
+  },
+  "style": "v2",
+  "sitemapLocation": "sitemap.json",
+  "lazyCodeLoading": "requiredComponents"
+}
